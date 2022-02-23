@@ -2,6 +2,8 @@
 import { useTheme } from '@mui/material/styles';
 import { Container, Grid, Stack, Card } from '@mui/material';
 
+import KeplerGl from 'kepler.gl';
+
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
