@@ -143,12 +143,17 @@ export default function Router() {
     },
     {
       path: '/',
-      element: <MainLayout />,
+      // element: <MainLayout />,
+      element: (
+        <AuthGuard>
+          <DashboardLayout />
+        </AuthGuard>
+      ),
       children: [
-        { element: <HomePage />, index: true },
-        { path: 'about-us', element: <About /> },
-        { path: 'contact-us', element: <Contact /> },
-        { path: 'faqs', element: <Faqs /> },
+        { element: <GeneralApp />, index: true },
+        // { path: 'about-us', element: <About /> },
+        // { path: 'contact-us', element: <Contact /> },
+        // { path: 'faqs', element: <Faqs /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },

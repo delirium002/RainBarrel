@@ -18,20 +18,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function DownloadWidget() {
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', pt: 3, pb: 3.5, pl: 12 }}>
-      <Box sx={{ flexGrow: 0.5 }}>
+    <Card sx={{ display: 'flex', alignItems: 'end', justifyContent: 'end', pt: 3, pb: 3.5 }}>
+      <Box sx={{ flexGrow: 0.1 }}>
         <IconWrapperStyle>
           <Iconify width={20} height={20} icon="eva:star-fill" />
         </IconWrapperStyle>
       </Box>
-      <Box sx={{ flexGrow: 0.5 }}>
+      <Box sx={{ flexGrow: 0.1 }}>
         <IconWrapperStyle>
           <Iconify width={20} height={20} icon="eva:download-fill" />
         </IconWrapperStyle>
       </Box>
-      <Box sx={{ flexGrow: 0.5 }}>
+      <Box sx={{ flexGrow: 0.1 }}>
         <IconWrapperStyle>
-          <Iconify width={20} height={20} icon="eva:edit-fill" />
+          <Iconify width={20} height={20} icon="eva:share-fill" />
         </IconWrapperStyle>
       </Box>
     </Card>

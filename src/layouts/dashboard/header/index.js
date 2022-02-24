@@ -45,10 +45,10 @@ const RootStyle = styled(AppBar, {
   }),
   [theme.breakpoints.up('lg')]: {
     height: HEADER.DASHBOARD_DESKTOP_HEIGHT,
-    width: `calc(100% - ${NAVBAR.DASHBOARD_WIDTH + 1}px)`,
-    ...(isCollapse && {
-      width: `calc(100% - ${NAVBAR.DASHBOARD_COLLAPSE_WIDTH}px)`,
-    }),
+    // width: `calc(100% - ${NAVBAR.DASHBOARD_WIDTH + 1}px)`,
+    // ...(isCollapse && {
+    //   width: `calc(100% - ${NAVBAR.DASHBOARD_COLLAPSE_WIDTH}px)`,
+    // }),
     ...(isOffset && {
       height: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
     }),
@@ -81,13 +81,14 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
           px: { lg: 5 },
         }}
       >
-        {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />}
+        <Logo sx={{ mr: 2.5 }} />
+        {/* {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />} */}
 
-        {!isDesktop && (
+        {/* {!isDesktop && (
           <IconButtonAnimate onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
             <Iconify icon="eva:menu-2-fill" />
           </IconButtonAnimate>
-        )}
+        )} */}
 
         {/* <Searchbar /> */}
         {/* <Box sx={{ flexGrow: 1 }} /> */}
@@ -103,7 +104,6 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
         <Stack style={{ color: 'black' }} spacing={1} sx={{ mr: 4, ml: 4 }}>
           <Typography variant="h6">Custom</Typography>
         </Stack>
-
         <Input
           style={{ backgroundColor: '#F5F5F5', borderRadius: '4px', padding: '5px', marginRight: '35px' }}
           autoFocus
@@ -117,7 +117,6 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
           }
           sx={{ mr: 1, fontWeight: 'fontWeightLight' }}
         />
-
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           {/* <LanguagePopover />
           <NotificationsPopover />

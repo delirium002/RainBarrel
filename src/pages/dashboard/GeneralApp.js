@@ -2,7 +2,8 @@
 import { useTheme } from '@mui/material/styles';
 import { Container, Grid, Stack, Card } from '@mui/material';
 
-import KeplerGl from 'kepler.gl';
+import { doc, getDoc } from 'firebase/firestore';
+import { DB } from '../../contexts/FirebaseContext';
 
 // hooks
 import useAuth from '../../hooks/useAuth';
@@ -34,6 +35,18 @@ export default function GeneralApp() {
   const theme = useTheme();
   const { themeStretch } = useSettings();
 
+  const gets = async () => {
+    const docRef = doc(DB, 'data', 'DBTopAnalytics');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log('Document data:', docSnap.data());
+    } else {
+      console.log('No such document!');
+    }
+  };
+  gets();
+
   return (
     <Page title="General: App">
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -46,19 +59,19 @@ export default function GeneralApp() {
             <AppFeatured />
           </Grid> */}
 
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <AppWidgetSummary title="Public Audience" description="Women with Pets" code="#45487" />
           </Grid>
 
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <AppWidgetSummary title="Audience Size" percent={12} total={760194} />
           </Grid>
 
-          <Grid item xs={12} md={3}>
+          {/* <Grid item xs={12} md={3}>
             <AppWidgetSummary title="Pol Count" percent={-5} total={2218} />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <DownloadWidget />
           </Grid>
 

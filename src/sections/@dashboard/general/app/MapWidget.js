@@ -74,7 +74,7 @@ export default function MapWidget() {
             id="covid"
             width={window.innerWidth}
             mapboxApiAccessToken="pk.eyJ1IjoiYWhzYW5uYXNlZW05NyIsImEiOiJja3p4MG5saG0yMDJmMnVwa2Npa3Z3dDV0In0.eljSkJFpbxDvud308RNKkA"
-            height={window.innerHeight - 300}
+            height={window.innerHeight}
           />
         </Card>
       </Box>

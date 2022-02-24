@@ -1,94 +1,98 @@
 import PropTypes from 'prop-types';
+
+import LinearProgress from '@mui/material/LinearProgress';
+
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Card, Rating, CardHeader, Typography, Stack } from '@mui/material';
-// utils
-import { fCurrency, fShortenNumber } from '../../../../utils/formatNumber';
+import { Box, Card, CardHeader, Typography, Stack, Grid } from '@mui/material';
 // _mock_
 import { _appRelated } from '../../../../_mock';
 // components
-import Label from '../../../../components/Label';
-import Image from '../../../../components/Image';
 import Iconify from '../../../../components/Iconify';
-import Scrollbar from '../../../../components/Scrollbar';
 
 // ----------------------------------------------------------------------
 
+const data = [
+  {
+    icon: 'google',
+    title: 'DV 360',
+    value: 47,
+  },
+  {
+    icon: 'google',
+    title: 'TTD',
+    value: 23,
+  },
+  {
+    icon: 'facebook',
+    title: 'Amazon',
+    value: 21,
+  },
+  {
+    icon: 'google',
+    title: 'Meta',
+    value: 27,
+  },
+  {
+    icon: 'google',
+    title: 'Google',
+    value: 47,
+  },
+  {
+    icon: 'google',
+    title: 'Youtube',
+    value: 47,
+  },
+];
+
 export default function AppSocialMatch() {
   return (
-    <Card>
+    <Card sx={{ p: 2 }}>
       <CardHeader title="Social Match Rate" />
-      <Scrollbar>
-        <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
-          {_appRelated.map((app) => (
-            <ApplicationItem key={app.id} app={app} />
+      <Stack sx={{ p: 2, pr: 0 }}>
+        <Grid container spacing={3} sx={{ justifyContent: 'space-around' }}>
+          {data.map((e, index) => (
+            <Grid item sx={12} lg={6}>
+              <ContentBox key={index} data={e} />
+            </Grid>
           ))}
-        </Stack>
-      </Scrollbar>
+        </Grid>
+      </Stack>
     </Card>
   );
 }
 
-// ----------------------------------------------------------------------
-
-ApplicationItem.propTypes = {
-  app: PropTypes.shape({
-    name: PropTypes.string,
-    price: PropTypes.number,
-    rating: PropTypes.number,
-    review: PropTypes.number,
-    shortcut: PropTypes.string,
-    system: PropTypes.string,
-  }),
+const ContentBox = ({ data }) => {
+  const { icon, title, value } = data;
+  return (
+    <Box sx={{ mt: 2, width: '90%' }}>
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ mr: '5px' }}>
+          <Iconify width={20} height={20} icon={`eva:${icon}-outline`} color="#615bfe" />
+        </Box>
+        <Box>
+          <Typography variant="subtitle2" color="#808191">
+            {title}
+          </Typography>
+        </Box>
+      </Box>
+      <Box>
+        <Box>
+          <Typography variant="h4" color="#11142D">
+            {value}%
+          </Typography>
+        </Box>
+        <Box>
+          <LinearProgress variant="determinate" value={value} color="secondary" style={{ color: '#605BFF' }} />
+        </Box>
+      </Box>
+    </Box>
+  );
 };
 
-function ApplicationItem({ app }) {
-  const theme = useTheme();
-  const { shortcut, system, price, rating, review, name } = app;
-
-  return (
-    <Stack direction="row" alignItems="center" spacing={2}>
-      <Box
-        sx={{
-          width: 48,
-          height: 48,
-          flexShrink: 0,
-          display: 'flex',
-          borderRadius: 1.5,
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'background.neutral',
-        }}
-      >
-        <Image src={shortcut} alt={name} sx={{ width: 24, height: 24 }} />
-      </Box>
-
-      <Box sx={{ flexGrow: 1, minWidth: 160 }}>
-        <Typography variant="subtitle2">{name}</Typography>
-        <Stack direction="row" alignItems="center" sx={{ mt: 0.5, color: 'text.secondary' }}>
-          <Iconify
-            width={16}
-            height={16}
-            icon={system === 'Mac' ? 'ant-design:apple-filled' : 'ant-design:windows-filled'}
-          />
-          <Typography variant="caption" sx={{ ml: 0.5, mr: 1 }}>
-            {system}
-          </Typography>
-          <Label
-            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-            color={price === 0 ? 'success' : 'error'}
-          >
-            {price === 0 ? 'Free' : fCurrency(price)}
-          </Label>
-        </Stack>
-      </Box>
-
-      <Stack alignItems="flex-end" sx={{ pr: 3 }}>
-        <Rating readOnly size="small" precision={0.5} name="reviews" value={rating} />
-        <Typography variant="caption" sx={{ mt: 0.5, color: 'text.secondary' }}>
-          {fShortenNumber(review)}&nbsp;reviews
-        </Typography>
-      </Stack>
-    </Stack>
-  );
-}
+ContentBox.propTypes = {
+  data: PropTypes.shape({
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    value: PropTypes.number,
+  }),
+};
