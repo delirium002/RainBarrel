@@ -59,21 +59,17 @@ export default function GeneralApp() {
             <AppFeatured />
           </Grid> */}
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={12}>
             <AppWidgetSummary title="Public Audience" description="Women with Pets" code="#45487" />
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <AppWidgetSummary title="Audience Size" percent={12} total={760194} />
-          </Grid>
-
-          {/* <Grid item xs={12} md={3}>
-            <AppWidgetSummary title="Pol Count" percent={-5} total={2218} />
           </Grid> */}
 
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <DownloadWidget />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} lg={8}>
             <MapWidget />

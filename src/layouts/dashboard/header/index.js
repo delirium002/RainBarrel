@@ -79,9 +79,14 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
         sx={{
           minHeight: '100% !important',
           px: { lg: 5 },
+          display: 'flex',
+          justifyContent: 'space-between',
         }}
       >
-        <Logo sx={{ mr: 2.5 }} />
+        <Stack spacing={1}>
+          <Logo />
+        </Stack>
+
         {/* {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />} */}
 
         {/* {!isDesktop && (
@@ -92,37 +97,49 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
 
         {/* <Searchbar /> */}
         {/* <Box sx={{ flexGrow: 1 }} /> */}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', color: 'black' }}>
+            <Box sx={{ mr: 4, ml: 4 }}>
+              <Typography variant="h6">Dashboard</Typography>
+            </Box>
 
-        <Stack style={{ color: 'black' }} spacing={1} sx={{ mr: 4, ml: 4 }}>
-          <Typography variant="h6">Dashboard</Typography>
-        </Stack>
+            <Box sx={{ mr: 4, ml: 4 }}>
+              <Typography variant="h6">Public</Typography>
+            </Box>
 
-        <Stack style={{ color: 'black' }} spacing={1} sx={{ mr: 4, ml: 4 }}>
-          <Typography variant="h6">Public</Typography>
-        </Stack>
+            <Box sx={{ mr: 4, ml: 4 }}>
+              <Typography variant="h6">Custom</Typography>
+            </Box>
+          </Box>
 
-        <Stack style={{ color: 'black' }} spacing={1} sx={{ mr: 4, ml: 4 }}>
-          <Typography variant="h6">Custom</Typography>
-        </Stack>
-        <Input
-          style={{ backgroundColor: '#F5F5F5', borderRadius: '4px', padding: '5px', marginRight: '35px' }}
-          autoFocus
-          fullWidth
-          disableUnderline
-          placeholder="Search for audience…"
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify icon={'eva:search-fill'} sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-            </InputAdornment>
-          }
-          sx={{ mr: 1, fontWeight: 'fontWeightLight' }}
-        />
-        <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          {/* <LanguagePopover />
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ mr: 2, width: '40vw' }}>
+              <Input
+                autoFocus
+                fullWidth
+                disableUnderline
+                placeholder="Search for audience…"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Iconify icon={'eva:search-fill'} sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+                  </InputAdornment>
+                }
+                sx={{
+                  fontWeight: 'fontWeightLight',
+                  backgroundColor: '#F5F5F5',
+                  borderRadius: '4px',
+                  padding: '5px',
+                }}
+              />
+            </Box>
+            <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+              {/* <LanguagePopover />
           <NotificationsPopover />
           <ContactsPopover /> */}
-          <AccountPopover />
-        </Stack>
+              <AccountPopover />
+            </Stack>
+          </Box>
+        </Box>
       </Toolbar>
     </RootStyle>
   );
