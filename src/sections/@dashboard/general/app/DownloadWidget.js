@@ -4,7 +4,7 @@ import { Box, Card } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
 
-const IconWrapperStyle = styled('div')(({ theme }) => ({
+const IconWrapperStyle = styled('div')(() => ({
   width: 32,
   height: 32,
   display: 'flex',

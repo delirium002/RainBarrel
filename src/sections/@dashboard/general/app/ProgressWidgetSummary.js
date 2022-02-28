@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import ReactApexChart from 'react-apexcharts';
-
 import LinearProgress from '@mui/material/LinearProgress';
 
 // @mui
@@ -11,35 +9,16 @@ import { fNumber, fPercent } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
 
-// AppWidgetSummary.propTypes = {
-//   chartColor: PropTypes.string.isRequired,
-//   chartData: PropTypes.arrayOf(PropTypes.number).isRequired,
-//   Number: PropTypes.number.isRequired,
-//   title: PropTypes.string.isRequired,
-//   total: PropTypes.number.isRequired,
-// };
+ProgressWidgetSummary.propTypes = {
+  polCount: PropTypes.number.isRequired,
+  polPercent: PropTypes.number.isRequired,
+  genderData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ageRangeData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  parentData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
-export default function ProgressWidgetSummary() {
+export default function ProgressWidgetSummary({ polCount, polPercent, genderData, ageRangeData, parentData }) {
   const theme = useTheme();
-
-  const genderData = [
-    { title: 'Male', value: 40 },
-    { title: 'Female', value: 80 },
-  ];
-
-  const ageRangeData = [
-    { title: '12-18', value: 3 },
-    { title: '19-25', value: 70 },
-    { title: '26-32', value: 27 },
-    { title: '33-39', value: 0 },
-    { title: '40-46', value: 0 },
-    { title: '50+', value: 0 },
-  ];
-
-  const parentalData = [
-    { title: 'Parents', value: 0 },
-    { title: 'Non-Parents', value: 100 },
-  ];
 
   const IconWrapperStyle = styled('div')(({ theme }) => ({
     width: 24,
@@ -52,34 +31,33 @@ export default function ProgressWidgetSummary() {
     backgroundColor: alpha(theme.palette.success.main, 0.16),
   }));
 
-  const title = 'Pol Count';
-  const total = 2644785;
-  const percent = 40;
-
   return (
     <Card sx={{ alignItems: 'center', p: 2 }}>
       <Card sx={{ display: 'flex', alignItems: 'center', p: 2, backgroundColor: '#EEFBE8' }}>
         <Box sx={{ flexGrow: 1, color: '#11142D' }}>
-          <Typography variant="subtitle2">{title}</Typography>
-
-          {total && <Typography variant="h5">{fNumber(total)}</Typography>}
+          <Typography variant="subtitle2">Pol Count</Typography>
+          <Typography variant="h5">{fNumber(polCount)}</Typography>
         </Box>
 
-        {percent && (
+        {polPercent && (
           <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
             <IconWrapperStyle
               sx={{
-                ...(percent < 0 && {
+                ...(polPercent < 0 && {
                   color: 'error.main',
                   bgcolor: alpha(theme.palette.error.main, 0.16),
                 }),
               }}
             >
-              <Iconify width={16} height={16} icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'} />
+              <Iconify
+                width={16}
+                height={16}
+                icon={polPercent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
+              />
             </IconWrapperStyle>
             <Typography component="span" variant="subtitle2">
-              {percent > 0 && '+'}
-              {fPercent(percent)}
+              {polPercent > 0 && '+'}
+              {fPercent(polPercent)}
             </Typography>
           </Stack>
         )}
@@ -97,21 +75,21 @@ export default function ProgressWidgetSummary() {
             </Typography>
             {genderData?.map((data, index) => (
               <Grid key={index} spacing={2} sx={{ pt: 1 }} container>
-                <Grid item>
+                <Grid item sx={{ minWidth: 110 }}>
                   <Typography variant="subtitle1" color="#7C7C7C">
                     {data.title}
                   </Typography>
                 </Grid>
-                <Grid xs item sx={{ mt: 1.2 }}>
+                <Grid xs item sx={{ mt: 1.2, color: '#fff' }}>
                   <LinearProgress
                     variant="determinate"
                     value={data.value}
                     color="secondary"
-                    style={{ color: '#605BFF' }}
+                    style={{ colorPrimary: '#605BFF' }}
                   />
                 </Grid>
                 <Grid item>
-                  <Typography variant="subtitle1" color="#000">
+                  <Typography variant="subtitle1" color="#000" sx={{ minWidth: 35 }}>
                     {fNumber(data.value)}%
                   </Typography>
                 </Grid>
@@ -125,7 +103,7 @@ export default function ProgressWidgetSummary() {
             </Typography>
             {ageRangeData?.map((data, index) => (
               <Grid key={index} spacing={2} sx={{ pt: 1 }} container>
-                <Grid item>
+                <Grid item sx={{ minWidth: 110 }}>
                   <Typography variant="subtitle1" color="#7C7C7C">
                     {data.title}
                   </Typography>
@@ -138,7 +116,7 @@ export default function ProgressWidgetSummary() {
                     style={{ color: '#605BFF' }}
                   />
                 </Grid>
-                <Grid item>
+                <Grid item sx={{ minWidth: 50 }}>
                   <Typography variant="subtitle1" color="#000">
                     {fNumber(data.value)}%
                   </Typography>
@@ -151,9 +129,9 @@ export default function ProgressWidgetSummary() {
             <Typography variant="h6" color="#11142D">
               Parental Status
             </Typography>
-            {parentalData?.map((data, index) => (
+            {parentData?.map((data, index) => (
               <Grid key={index} spacing={2} sx={{ pt: 1 }} container>
-                <Grid item>
+                <Grid item sx={{ minWidth: 110 }}>
                   <Typography variant="subtitle1" color="#7C7C7C">
                     {data.title}
                   </Typography>
@@ -166,7 +144,7 @@ export default function ProgressWidgetSummary() {
                     style={{ color: '#605BFF' }}
                   />
                 </Grid>
-                <Grid item>
+                <Grid item sx={{ minWidth: 50 }}>
                   <Typography variant="subtitle1" color="#000">
                     {fNumber(data.value)} %
                   </Typography>

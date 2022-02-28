@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-export default function BaseOptionChart(color) {
+export default function BaseOptionChartArea(color, gradientTo) {
   const theme = useTheme();
 
   const LABEL_TOTAL = {
@@ -25,15 +25,7 @@ export default function BaseOptionChart(color) {
 
   return {
     // Colors
-    colors: [
-      color,
-      // theme.palette.primary.main,
-      // theme.palette.chart.yellow[0],
-      // theme.palette.chart.blue[0],
-      // theme.palette.chart.violet[0],
-      // theme.palette.chart.green[0],
-      // theme.palette.chart.red[0],
-    ],
+    colors: [color],
 
     // Chart
     chart: {
@@ -62,13 +54,15 @@ export default function BaseOptionChart(color) {
 
     // Fill
     fill: {
-      opacity: 1,
+      type: 'gradient',
       gradient: {
-        type: 'vertical',
-        shadeIntensity: 0,
-        opacityFrom: 0.4,
-        opacityTo: 0,
-        stops: [0, 100],
+        shade: 'dark',
+        gradientToColors: [gradientTo],
+        shadeIntensity: 1,
+        type: 'horizontal',
+        opacityFrom: 0.5,
+        opacityTo: 0.5,
+        stops: [0, 100, 100, 100],
       },
     },
 

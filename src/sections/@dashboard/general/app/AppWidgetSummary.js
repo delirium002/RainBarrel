@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import ReactApexChart from 'react-apexcharts';
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack } from '@mui/material';
@@ -21,7 +20,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.success.main, 0.16),
 }));
 
-const ShareIconWrapperStyle = styled('div')(({ theme }) => ({
+const ShareIconWrapperStyle = styled('div')(() => ({
   width: 32,
   height: 32,
   display: 'flex',
@@ -35,39 +34,34 @@ const ShareIconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-// AppWidgetSummary.propTypes = {
-//   chartColor: PropTypes.string.isRequired,
-//   chartData: PropTypes.arrayOf(PropTypes.number).isRequired,
-//   percent: PropTypes.number.isRequired,
-//   title: PropTypes.string.isRequired,
-//   total: PropTypes.number.isRequired,
-// };
+AppWidgetSummary.propTypes = {
+  audience: PropTypes.string.isRequired,
+  audienceCode: PropTypes.string.isRequired,
+  audienceSize: PropTypes.number.isRequired,
+  audiencePercent: PropTypes.number.isRequired,
+};
 
-export default function AppWidgetSummary({ title, description, code, total }) {
+export default function AppWidgetSummary({ audience, audienceCode, audienceSize, audiencePercent }) {
   const theme = useTheme();
-
-  const percent = 40;
 
   return (
     <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 4 }}>
-      <Stack direction="row" sx={{ width: '35vw', justifyContent: 'space-between' }}>
+      <Stack direction="row" sx={{ width: '45vw', justifyContent: 'space-between' }}>
         <Stack>
           <Typography variant="subtitle2" color="#93A3AB">
-            {title}
+            Public Audience
           </Typography>
 
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h5">{description}</Typography>
+              <Typography variant="h5">{audience}</Typography>
             </Box>
             <Box sx={{ ml: 3 }}>
               <Typography variant="h5" color="#FAAD14">
-                {code}
+                {audienceCode}
               </Typography>
             </Box>
           </Box>
-
-          {total && <Typography variant="h5">{fNumber(total)}</Typography>}
         </Stack>
 
         <Stack direction="row">
@@ -75,14 +69,14 @@ export default function AppWidgetSummary({ title, description, code, total }) {
             <Typography variant="subtitle2" color="#93A3AB">
               Audience Size
             </Typography>
-            <Typography variant="h5">{fNumber(760194)}</Typography>
+            <Typography variant="h5">{fNumber(audienceSize)}</Typography>
           </Box>
 
-          {percent && (
+          {audiencePercent && (
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, ml: 2 }}>
               <IconWrapperStyle
                 sx={{
-                  ...(percent < 0 && {
+                  ...(audiencePercent < 0 && {
                     color: 'error.main',
                     bgcolor: alpha(theme.palette.error.main, 0.16),
                   }),
@@ -91,12 +85,12 @@ export default function AppWidgetSummary({ title, description, code, total }) {
                 <Iconify
                   width={16}
                   height={16}
-                  icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
+                  icon={audiencePercent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
                 />
               </IconWrapperStyle>
               <Typography component="span" variant="subtitle2">
-                {percent > 0 && '+'}
-                {fPercent(percent)}
+                {audiencePercent > 0 && '+'}
+                {fPercent(audiencePercent)}
               </Typography>
             </Stack>
           )}
