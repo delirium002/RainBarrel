@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Card, Typography, Stack } from '@mui/material';
+import { Box, Card, Typography, Stack, Skeleton } from '@mui/material';
 // utils
 import { fNumber, fPercent } from '../../../../utils/formatNumber';
 // components
@@ -34,14 +33,7 @@ const ShareIconWrapperStyle = styled('div')(() => ({
 
 // ----------------------------------------------------------------------
 
-AppWidgetSummary.propTypes = {
-  audience: PropTypes.string.isRequired,
-  audienceCode: PropTypes.string.isRequired,
-  audienceSize: PropTypes.number.isRequired,
-  audiencePercent: PropTypes.number.isRequired,
-};
-
-export default function AppWidgetSummary({ audience, audienceCode, audienceSize, audiencePercent }) {
+export default function AppWidgetSummary({ loading, audience, audienceCode, audienceSize, audiencePercent }) {
   const theme = useTheme();
 
   return (
@@ -52,16 +44,20 @@ export default function AppWidgetSummary({ audience, audienceCode, audienceSize,
             Public Audience
           </Typography>
 
-          <Box sx={{ display: 'flex' }}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h5">{audience}</Typography>
+          {loading ? (
+            <Skeleton variant="text" width="100%" height={15} />
+          ) : (
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="h5">{audience}</Typography>
+              </Box>
+              <Box sx={{ ml: 3 }}>
+                <Typography variant="h5" color="#FAAD14">
+                  #{audienceCode}
+                </Typography>
+              </Box>
             </Box>
-            <Box sx={{ ml: 3 }}>
-              <Typography variant="h5" color="#FAAD14">
-                {audienceCode}
-              </Typography>
-            </Box>
-          </Box>
+          )}
         </Stack>
 
         <Stack direction="row">
@@ -69,7 +65,12 @@ export default function AppWidgetSummary({ audience, audienceCode, audienceSize,
             <Typography variant="subtitle2" color="#93A3AB">
               Audience Size
             </Typography>
-            <Typography variant="h5">{fNumber(audienceSize)}</Typography>
+
+            {loading ? (
+              <Skeleton variant="text" width="100%" height={15} />
+            ) : (
+              <Typography variant="h5">{fNumber(audienceSize)}</Typography>
+            )}
           </Box>
 
           {audiencePercent && (

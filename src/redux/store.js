@@ -10,25 +10,16 @@ import { rootPersistConfig, rootReducer } from './rootReducer';
 
 // ----------------------------------------------------------------------
 
-// const store = configureStore({
-//   reducer: persistReducer(rootPersistConfig, rootReducer),
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false,
-//       immutableCheck: false,
-//     }),
-// });
+const store = configureStore({
+  reducer: persistReducer(rootPersistConfig, rootReducer),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    }),
+});
 
-// const store = createStore(
-//   rootReducer,
-//   applyMiddleware(
-//     enhanceReduxMiddleware([
-//       /* Add other middlewares here */
-//     ])
-//   )
-// );
-
-const store = createStore(persistReducer(rootPersistConfig, rootReducer), {}, applyMiddleware(taskMiddleware));
+// const store = createStore(persistReducer(rootPersistConfig, rootReducer), {}, applyMiddleware(taskMiddleware));
 
 const persistor = persistStore(store);
 

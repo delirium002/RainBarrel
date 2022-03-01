@@ -11,7 +11,6 @@ import BaseOptionChartArea from '../../../../components/chart/BaseOptionChartAre
 AppGraph.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  chartData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default function AppGraph({ type, title, chartData }) {
@@ -74,8 +73,8 @@ export default function AppGraph({ type, title, chartData }) {
         // }
       />
 
-      {chartData?.map((item) => (
-        <Box key={item.year} sx={{ mt: 3, mx: 3 }} dir="ltr">
+      {chartData?.map((item, index) => (
+        <Box key={index} sx={{ mt: 3, mx: 3 }} dir="ltr">
           <ReactApexChart
             type={type}
             series={item.data}

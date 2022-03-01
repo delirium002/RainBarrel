@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import LinearProgress from '@mui/material/LinearProgress';
 
 // @mui
@@ -7,19 +5,13 @@ import { Box, Card, CardHeader, Typography, Stack, Grid } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-AppSimilarMatch.propTypes = {
-  title: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
 export default function AppSimilarMatch({ title, color, data }) {
   return (
     <Card sx={{ p: 2 }}>
       <CardHeader title={title} />
       <Stack sx={{ p: 2, pr: 0 }}>
         <Grid container sx={{ justifyContent: 'space-around' }}>
-          {data.map((e, index) => (
+          {data?.map((e, index) => (
             <Grid item key={index} sx={12} md={3} lg={3}>
               <ContentBox color={color} data={e} />
             </Grid>
@@ -59,12 +51,4 @@ const ContentBox = ({ data }) => {
       </Box>
     </Box>
   );
-};
-
-ContentBox.propTypes = {
-  data: PropTypes.shape({
-    icon: PropTypes.string,
-    title: PropTypes.string,
-    value: PropTypes.number,
-  }),
 };

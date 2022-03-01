@@ -11,7 +11,7 @@ import { PricingPlanCard } from '../sections/pricing';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  minHeight: '99%',
+  minHeight: '100%',
   paddingTop: theme.spacing(15),
   paddingBottom: theme.spacing(10),
 }));

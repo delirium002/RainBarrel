@@ -13,6 +13,7 @@ import { HEADER, NAVBAR } from '../../config';
 import DashboardHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
 import NavbarHorizontal from './navbar/NavbarHorizontal';
+import Footer from './MainFooter';
 
 // ----------------------------------------------------------------------
 
@@ -82,19 +83,22 @@ export default function DashboardLayout() {
   }
 
   return (
-    <Box
-      sx={{
-        display: { lg: 'flex' },
-        minHeight: { lg: 1 },
-      }}
-    >
-      <DashboardHeader isCollapse={isCollapse} onOpenSidebar={() => setOpen(true)} />
+    <>
+      <Box
+        sx={{
+          display: { lg: 'flex' },
+          minHeight: { lg: 1 },
+        }}
+      >
+        <DashboardHeader isCollapse={isCollapse} onOpenSidebar={() => setOpen(true)} />
 
-      {/* <NavbarVertical isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} /> */}
+        {/* <NavbarVertical isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} /> */}
 
-      <MainStyle collapseClick={collapseClick}>
-        <Outlet />
-      </MainStyle>
-    </Box>
+        <MainStyle collapseClick={collapseClick}>
+          <Outlet />
+        </MainStyle>
+      </Box>
+      <Footer />
+    </>
   );
 }

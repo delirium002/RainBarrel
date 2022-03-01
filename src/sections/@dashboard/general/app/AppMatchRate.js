@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import LinearProgress from '@mui/material/LinearProgress';
 
 // @mui
@@ -10,21 +8,13 @@ import Iconify from '../../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-AppMatchRate.propTypes = {
-  title: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  heading: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
 export default function AppMatchRate({ title, color, heading, description, data }) {
   return (
     <Card sx={{ p: 2 }}>
       <CardHeader title={title} />
       <Stack sx={{ p: 2, pr: 0 }}>
         <Grid container spacing={3} sx={{ justifyContent: 'space-around' }}>
-          {data.map((e, index) => (
+          {data?.map((e, index) => (
             <Grid item key={index} sx={12} lg={6}>
               <ContentBox data={e} color={color} />
             </Grid>
@@ -71,12 +61,4 @@ const ContentBox = ({ data, color }) => {
       </Box>
     </Box>
   );
-};
-
-ContentBox.propTypes = {
-  data: PropTypes.shape({
-    icon: PropTypes.string,
-    title: PropTypes.string,
-    value: PropTypes.number,
-  }),
 };
