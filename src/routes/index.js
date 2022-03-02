@@ -56,19 +56,20 @@ export default function Router() {
 
     // Dashboard Routes
     {
-      path: 'dashboard',
+      // path: 'dashboard',
+      path: '/dashboard',
       element: (
-        <AuthGuard>
-          <DashboardLayout />
-        </AuthGuard>
+        // <AuthGuard>
+        <DashboardLayout />
+        // </AuthGuard>
       ),
       children: [
-        { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-        { path: 'app', element: <GeneralApp /> },
-        { path: 'ecommerce', element: <GeneralEcommerce /> },
-        { path: 'analytics', element: <GeneralAnalytics /> },
-        { path: 'banking', element: <GeneralBanking /> },
-        { path: 'booking', element: <GeneralBooking /> },
+        // { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
+        { path: '', element: <GeneralApp /> },
+        // { path: 'ecommerce', element: <GeneralEcommerce /> },
+        // { path: 'analytics', element: <GeneralAnalytics /> },
+        // { path: 'banking', element: <GeneralBanking /> },
+        // { path: 'booking', element: <GeneralBooking /> },
 
         {
           path: 'e-commerce',
@@ -145,9 +146,9 @@ export default function Router() {
       path: '/',
       // element: <MainLayout />,
       element: (
-        <AuthGuard>
-          <DashboardLayout />
-        </AuthGuard>
+        // <AuthGuard>
+        <DashboardLayout />
+        // </AuthGuard>
       ),
       children: [
         { element: <GeneralApp />, index: true },

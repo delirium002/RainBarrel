@@ -41,6 +41,7 @@ import { getDashboardData } from '../../redux/slices/dashboard/action';
 export default function GeneralApp() {
   const { user } = useAuth();
   const theme = useTheme();
+
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
 

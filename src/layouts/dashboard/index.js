@@ -78,6 +78,7 @@ export default function DashboardLayout() {
         >
           <Outlet />
         </Box>
+        <Footer />
       </>
     );
   }

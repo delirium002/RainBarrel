@@ -62,8 +62,6 @@ export default function MainFooter() {
           justifyContent={{ xs: 'center', md: 'space-between' }}
           sx={{ textAlign: { xs: 'center', md: 'left' } }}
         >
-          {/*  */}
-
           <Grid item xs={12} md={7}>
             <Stack spacing={5} direction={{ xs: 'column', md: 'row' }} justifyContent="space-between">
               {LINKS.map((list) => (

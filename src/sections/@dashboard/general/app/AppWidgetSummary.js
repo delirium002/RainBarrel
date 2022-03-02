@@ -1,6 +1,15 @@
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack, Skeleton } from '@mui/material';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+import { useNavigate } from 'react-router-dom';
+
+import useAuth from '../../../../hooks/useAuth';
 // utils
 import { fNumber, fPercent } from '../../../../utils/formatNumber';
 // components
@@ -34,11 +43,22 @@ const ShareIconWrapperStyle = styled('div')(() => ({
 // ----------------------------------------------------------------------
 
 export default function AppWidgetSummary({ loading, audience, audienceCode, audienceSize, audiencePercent }) {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   const theme = useTheme();
+
+  const handleFavourite = () => {
+    if (!user) {
+      navigate('/auth/login');
+    } else {
+      console.log('user', user);
+    }
+  };
 
   return (
     <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 4 }}>
-      <Stack direction="row" sx={{ width: '45vw', justifyContent: 'space-between' }}>
+      <Stack direction="row" sx={{ width: '60vw', justifyContent: 'space-between' }}>
         <Stack>
           <Typography variant="subtitle2" color="#93A3AB">
             Public Audience
@@ -47,13 +67,13 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
           {loading ? (
             <Skeleton variant="text" width="100%" height={15} />
           ) : (
-            <Box sx={{ display: 'flex' }}>
+            <Box>
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h5">{audience}</Typography>
               </Box>
-              <Box sx={{ ml: 3 }}>
-                <Typography variant="h5" color="#FAAD14">
-                  #{audienceCode}
+              <Box>
+                <Typography variant="subtitle2" color="#929292">
+                  ID: #{audienceCode}
                 </Typography>
               </Box>
             </Box>
@@ -74,7 +94,7 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
           </Box>
 
           {audiencePercent && (
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, ml: 2 }}>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ ml: 2 }}>
               <IconWrapperStyle
                 sx={{
                   ...(audiencePercent < 0 && {
@@ -96,11 +116,55 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
             </Stack>
           )}
         </Stack>
+
+        <Stack>
+          <Typography variant="subtitle2" color="#93A3AB">
+            Country
+          </Typography>
+
+          {loading ? (
+            <Skeleton variant="text" width="100%" height={15} />
+          ) : (
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="h5">Worldwide</Typography>
+
+              {/* <FormControl fullWidth sx={{ border: 'none', outline: 'none' }}>
+                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <Select
+                  sx={{ border: 'none', outline: 'none' }}
+                  // labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value="Worldwide"
+                  label="Age"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl> */}
+            </Box>
+          )}
+        </Stack>
+
+        <Stack>
+          <Typography variant="subtitle2" color="#93A3AB">
+            Audience Type
+          </Typography>
+
+          {loading ? (
+            <Skeleton variant="text" width="100%" height={15} />
+          ) : (
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="h5">All Visitors</Typography>
+            </Box>
+          )}
+        </Stack>
       </Stack>
 
       <Stack flexDirection="row" sx={{ justifyContent: 'end', pt: 3, pb: 3.5 }}>
         <Box sx={{ ml: 2 }}>
-          <ShareIconWrapperStyle>
+          <ShareIconWrapperStyle onClick={handleFavourite}>
             <Iconify width={20} height={20} icon="eva:star-fill" />
           </ShareIconWrapperStyle>
         </Box>

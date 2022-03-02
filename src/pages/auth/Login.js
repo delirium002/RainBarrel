@@ -75,7 +75,7 @@ export default function Login() {
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               Don’t have an account? {''}
-              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
+              <Link variant="subtitle2" color="secondary" component={RouterLink} to={PATH_AUTH.register}>
                 Get started
               </Link>
             </Typography>
@@ -99,12 +99,12 @@ export default function Login() {
             <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h4" gutterBottom>
-                  Sign in to Minimal
+                  Sign in to Rainbarrel
                 </Typography>
                 <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
               </Box>
 
-              <Tooltip title={capitalCase(method)} placement="right">
+              {/* <Tooltip title={capitalCase(method)} placement="right">
                 <>
                   <Image
                     disabledEffect
@@ -112,7 +112,7 @@ export default function Login() {
                     sx={{ width: 32, height: 32 }}
                   />
                 </>
-              </Tooltip>
+              </Tooltip> */}
             </Stack>
 
             <Alert severity="info" sx={{ mb: 3 }}>

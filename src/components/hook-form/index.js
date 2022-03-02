@@ -1,4 +1,5 @@
-export * from './RHFCheckbox';
+// export * from './RHFCheckbox';
+export { RHFCheckbox, RHFMultiCheckbox } from './RHFCheckbox';
 export * from './RHFUpload';
 
 export { default as FormProvider } from './FormProvider';

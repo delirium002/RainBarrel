@@ -113,19 +113,27 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
-              {option.label}
+        {user ? (
+          <>
+            <Stack sx={{ p: 1 }}>
+              {MENU_OPTIONS.map((option) => (
+                <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Stack>
+
+            <Divider sx={{ borderStyle: 'dashed' }} />
+
+            <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
+              Logout
             </MenuItem>
-          ))}
-        </Stack>
-
-        <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
-          Logout
-        </MenuItem>
+          </>
+        ) : (
+          <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
+            Login
+          </MenuItem>
+        )}
       </MenuPopover>
     </>
   );

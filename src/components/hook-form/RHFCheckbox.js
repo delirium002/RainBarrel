@@ -10,7 +10,7 @@ RHFCheckbox.propTypes = {
   name: PropTypes.string,
 };
 
-export function RHFCheckbox({ name, ...other }) {
+export function RHFCheckbox({ name, color, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -19,7 +19,7 @@ export function RHFCheckbox({ name, ...other }) {
         <Controller
           name={name}
           control={control}
-          render={({ field }) => <Checkbox {...field} checked={field.value} />}
+          render={({ field }) => <Checkbox color={color} {...field} checked={field.value} />}
         />
       }
       {...other}
