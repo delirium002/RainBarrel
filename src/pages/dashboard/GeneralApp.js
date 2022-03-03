@@ -16,17 +16,7 @@ import useSettings from '../../hooks/useSettings';
 import Page from '../../components/Page';
 // sections
 import {
-  // AppWidget,
-  // AppWelcome,
-  // AppFeatured,
-  // AppNewInvoice,
-  // AppTopAuthors,
-  // AppTopRelated,
-  // AppAreaInstalled,
   AppWidgetSummary,
-  // AppCurrentDownload,
-  // AppTopInstalledCountries,
-  // DownloadWidget,
   MapWidget,
   ProgressWidgetSummary,
   AppMatchRate,
@@ -54,7 +44,7 @@ export default function GeneralApp() {
   const { topAnalytics, dspMatchRate, chartData, rangeData, similarMatchData, socialMatchData } = dashboard;
 
   return (
-    <Page title="General: App">
+    <Page title="Audience">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>

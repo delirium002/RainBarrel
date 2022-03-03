@@ -11,7 +11,7 @@ import productReducer from './slices/product';
 import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 
-import { getDashboardDataReducer } from './slices/dashboard/reducer';
+import { getDashboardDataReducer, getDemoAuthDataReducer } from './slices/dashboard/reducer';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +37,7 @@ const rootReducer = combineReducers({
   product: persistReducer(productPersistConfig, productReducer),
 
   dashboardReducer: getDashboardDataReducer,
+  getDemoAuthDataReducer,
   // <-- mount kepler.gl reducer in your app
   keplerGl: keplerGlReducer,
 });

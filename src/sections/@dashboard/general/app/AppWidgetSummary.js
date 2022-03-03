@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack, Skeleton } from '@mui/material';
@@ -7,13 +11,17 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { useNavigate } from 'react-router-dom';
-
 import useAuth from '../../../../hooks/useAuth';
 // utils
 import { fNumber, fPercent } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
+
+import AppModal from './AppModal';
+import AppPopOver from './AppPopOver';
+
+import illustration from '../../../../assets/modalImage.png';
+import { getDemoAuthData } from '../../../../redux/slices/dashboard/action';
 
 // ----------------------------------------------------------------------
 
@@ -44,20 +52,57 @@ const ShareIconWrapperStyle = styled('div')(() => ({
 
 export default function AppWidgetSummary({ loading, audience, audienceCode, audienceSize, audiencePercent }) {
   const { user } = useAuth();
-  const navigate = useNavigate();
+
+  const { authData } = useSelector((state) => state.getDemoAuthDataReducer);
 
   const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [openPopOver, setOpenPopOver] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleFavourite = () => {
     if (!user) {
-      navigate('/auth/login');
+      setModalOpen(true);
     } else {
-      console.log('user', user);
+      dispatch(getDemoAuthData(user?.id));
+    }
+  };
+
+  console.log(authData);
+
+  const handleShare = (event) => {
+    if (!user) {
+      setModalOpen(true);
+    } else {
+      const tempInput = document.createElement('input');
+      tempInput.value = `${window.location.href}`;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      setAnchorEl(event.currentTarget);
+      setOpenPopOver(true);
     }
   };
 
   return (
     <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 4 }}>
+      <AppModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        title="You need an Account to use this feature"
+        image={illustration}
+      />
+      <AppPopOver
+        text="Link Copied!"
+        openPopOver={openPopOver}
+        setOpenPopOver={setOpenPopOver}
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+      />
+
       <Stack direction="row" sx={{ width: '60vw', justifyContent: 'space-between' }}>
         <Stack>
           <Typography variant="subtitle2" color="#93A3AB">
@@ -126,23 +171,14 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
             <Skeleton variant="text" width="100%" height={15} />
           ) : (
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h5">Worldwide</Typography>
+              {/* <Typography variant="h5">Worldwide</Typography> */}
 
-              {/* <FormControl fullWidth sx={{ border: 'none', outline: 'none' }}>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                  sx={{ border: 'none', outline: 'none' }}
-                  // labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value="Worldwide"
-                  label="Age"
-                  // onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+              <FormControl variant="standard" sx={{ minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-standard-label">Country</InputLabel>
+                <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Age">
+                  <MenuItem value="worldwide">Worldwide</MenuItem>
                 </Select>
-              </FormControl> */}
+              </FormControl>
             </Box>
           )}
         </Stack>
@@ -174,7 +210,7 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
           </ShareIconWrapperStyle>
         </Box>
         <Box sx={{ ml: 2 }}>
-          <ShareIconWrapperStyle>
+          <ShareIconWrapperStyle onClick={handleShare}>
             <Iconify width={20} height={20} icon="eva:share-fill" />
           </ShareIconWrapperStyle>
         </Box>

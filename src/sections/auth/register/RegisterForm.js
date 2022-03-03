@@ -11,7 +11,7 @@ import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import { FormProvider, RHFTextField, RHFSelect } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -73,6 +73,17 @@ export default function RegisterForm() {
 
         <RHFTextField name="email" label="Email address" />
 
+        <RHFSelect name="industry" label="Industry">
+          <optgroup>
+            <option value="marketing">Marketing</option>
+            <option value="information technology">Information Technology</option>
+            <option value="media">Media</option>
+          </optgroup>
+        </RHFSelect>
+
+        <RHFTextField name="position" label="Position" />
+        <RHFTextField name="location" label="Location (City)" />
+
         <RHFTextField
           name="password"
           label="Password"
@@ -88,7 +99,14 @@ export default function RegisterForm() {
           }}
         />
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          color="secondary"
+          loading={isSubmitting}
+        >
           Register
         </LoadingButton>
       </Stack>
