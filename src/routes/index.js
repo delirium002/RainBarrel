@@ -56,13 +56,8 @@ export default function Router() {
 
     // Dashboard Routes
     {
-      // path: 'dashboard',
       path: '/dashboard',
-      element: (
-        // <AuthGuard>
-        <DashboardLayout />
-        // </AuthGuard>
-      ),
+      element: <DashboardLayout />,
       children: [
         // { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: '', element: <GeneralApp /> },
@@ -157,6 +152,11 @@ export default function Router() {
         // { path: 'faqs', element: <Faqs /> },
       ],
     },
+    {
+      path: '/audience',
+      element: <DashboardLayout />,
+      children: [{ element: <Audience />, index: true }],
+    },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
@@ -192,6 +192,9 @@ const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
 const Calendar = Loadable(lazy(() => import('../pages/dashboard/Calendar')));
 const Kanban = Loadable(lazy(() => import('../pages/dashboard/Kanban')));
+// Audience
+const Audience = Loadable(lazy(() => import('../pages/Audience/Audience')));
+
 // Main
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
 const About = Loadable(lazy(() => import('../pages/About')));

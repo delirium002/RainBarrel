@@ -70,8 +70,6 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
     }
   };
 
-  console.log(authData);
-
   const handleShare = (event) => {
     if (!user) {
       setModalOpen(true);
@@ -90,6 +88,7 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
   return (
     <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 4 }}>
       <AppModal
+        type="auth"
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         title="You need an Account to use this feature"

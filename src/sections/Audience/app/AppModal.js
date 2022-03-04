@@ -6,8 +6,8 @@ import { Box, Typography, Modal, Button, TextField } from '@mui/material';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import Iconify from '../../../../components/Iconify';
-import Image from '../../../../components/Image';
+import Iconify from '../../../components/Iconify';
+import Image from '../../../components/Image';
 
 const AppModal = ({ type, modalOpen, setModalOpen, title, description, image }) => {
   const navigate = useNavigate();

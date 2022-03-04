@@ -1,22 +1,54 @@
+import { useState } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 
 // @mui
-import { Box, Card, CardHeader, Typography, Stack, Grid } from '@mui/material';
+import { Box, Button, Card, CardHeader, Typography, Stack, Grid } from '@mui/material';
 
+import useAuth from '../../../../hooks/useAuth';
 // components
 import Iconify from '../../../../components/Iconify';
+import AppModal from './AppModal';
 
+import illustration from '../../../../assets/modalImage.png';
 // ----------------------------------------------------------------------
 
 export default function AppMatchRate({ title, color, heading, description, data }) {
+  const { user } = useAuth();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('');
+
+  const handleContactModal = () => {
+    if (!user) {
+      setModalType('auth');
+      setModalOpen(true);
+    } else {
+      setModalType('contact');
+      setModalOpen(true);
+    }
+  };
+
   return (
     <Card sx={{ p: 2 }}>
+      <AppModal
+        type={modalType}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        title={modalType === 'contact' ? 'Contact us' : 'You need an Account to use this feature'}
+        description={
+          modalType === 'contact'
+            ? 'Please share your query with us using the form below, also upload the document if you have any.'
+            : undefined
+        }
+        image={illustration}
+      />
+
       <CardHeader title={title} />
       <Stack sx={{ p: 2, pr: 0 }}>
         <Grid container spacing={3} sx={{ justifyContent: 'space-around' }}>
           {data?.map((e, index) => (
             <Grid item key={index} sx={12} lg={6}>
-              <ContentBox data={e} color={color} />
+              <ContentBox data={e} color={color} handleClick={handleContactModal} />
             </Grid>
           ))}
         </Grid>
@@ -35,8 +67,9 @@ export default function AppMatchRate({ title, color, heading, description, data 
   );
 }
 
-const ContentBox = ({ data, color }) => {
+const ContentBox = ({ data, color, handleClick }) => {
   const { icon, title, value } = data;
+
   return (
     <Box sx={{ mt: 2, width: '90%' }}>
       <Box sx={{ display: 'flex' }}>
@@ -56,7 +89,19 @@ const ContentBox = ({ data, color }) => {
           </Typography>
         </Box>
         <Box>
-          <LinearProgress variant="determinate" value={value} color="secondary" style={{ color: '#000000' }} />
+          {value !== 0 ? (
+            <LinearProgress variant="determinate" value={value} color="secondary" sx={{ color: '#000000', mt: 2 }} />
+          ) : (
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              sx={{ color: '#000', border: '0.5px solid #D9D9D9' }}
+              onClick={handleClick}
+            >
+              Contact Us
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>

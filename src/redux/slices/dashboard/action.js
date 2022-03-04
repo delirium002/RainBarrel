@@ -1,5 +1,4 @@
 import axios from 'axios';
-import useAuth from '../../../hooks/useAuth';
 
 import {
   GET_DASHBOARD_DATA_REQUEST,
@@ -14,9 +13,7 @@ export const getDashboardData = () => async (dispatch) => {
   try {
     dispatch({ type: GET_DASHBOARD_DATA_REQUEST });
 
-    // const { data } = await axios.get(`${process.env.REACT_APP_SERVER_PORT}/dashboard`);
-
-    const { data } = await axios.get(`https://api.mocki.io/v2/923e1e4a/dashboard`);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_PORT}/dashboard`);
 
     dispatch({ type: GET_DASHBOARD_DATA_SUCCESS, payload: data });
   } catch (err) {
@@ -31,8 +28,6 @@ export const getDemoAuthData = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_DEMO_AUTH_DATA_REQUEST });
 
-    // const { data } = await axios.get(`${process.env.REACT_APP_SERVER_PORT}/DEMO_AUTH`);
-
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +35,7 @@ export const getDemoAuthData = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`https://api.mocki.io/v2/923e1e4a/authdemo`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_PORT}/authdemo`, config);
 
     dispatch({ type: GET_DEMO_AUTH_DATA_SUCCESS, payload: data });
   } catch (err) {
