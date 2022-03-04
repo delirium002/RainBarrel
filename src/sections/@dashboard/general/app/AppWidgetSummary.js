@@ -170,11 +170,8 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
             <Skeleton variant="text" width="100%" height={15} />
           ) : (
             <Box sx={{ flexGrow: 1 }}>
-              {/* <Typography variant="h5">Worldwide</Typography> */}
-
               <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-standard-label">Country</InputLabel>
-                <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Age">
+                <Select defaultValue="worldwide">
                   <MenuItem value="worldwide">Worldwide</MenuItem>
                 </Select>
               </FormControl>
@@ -190,9 +187,11 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
           {loading ? (
             <Skeleton variant="text" width="100%" height={15} />
           ) : (
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h5">All Visitors</Typography>
-            </Box>
+            <FormControl variant="standard" sx={{ minWidth: 120 }}>
+              <Select defaultValue="all visitors">
+                <MenuItem value="all visitors">All Visitors</MenuItem>
+              </Select>
+            </FormControl>
           )}
         </Stack>
       </Stack>
