@@ -1,8 +1,6 @@
-import LinearProgress from '@mui/material/LinearProgress';
-
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Card, Typography, Stack, Grid, Skeleton } from '@mui/material';
+import { Box, Card, Typography, Stack, Grid, Skeleton, Divider } from '@mui/material';
 // utils
 import { fNumber, fPercent } from '../../../../utils/formatNumber';
 // components
@@ -24,18 +22,28 @@ export default function ProgressWidgetSummary({ loading, polCount, polPercent, g
 
   return (
     <Card sx={{ alignItems: 'center', p: 2 }}>
-      <Card sx={{ display: 'flex', alignItems: 'center', p: 2, backgroundColor: '#EEFBE8' }}>
+      <Stack direction="row" sx={{ pt: 1 }}>
         <Box sx={{ flexGrow: 1, color: '#11142D' }}>
-          <Typography variant="subtitle2">Pol Count</Typography>
+          <Typography variant="h5" color="#11142D">
+            POI Count
+          </Typography>
+
           {loading ? (
             <Skeleton variant="text" width="100%" height={10} />
           ) : (
-            <Typography variant="h5">{fNumber(polCount)}</Typography>
+            <Typography variant="subtitle2" component="p" color="#7C7C7C" sx={{ pt: 2 }}>
+              {fNumber(polCount)}
+            </Typography>
           )}
         </Box>
 
         {polPercent && (
-          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
+          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1, pt: 2 }}>
+            <Typography component="span" variant="subtitle2">
+              {polPercent > 0 && '+'}
+              {fPercent(polPercent)}
+            </Typography>
+
             <IconWrapperStyle
               sx={{
                 ...(polPercent < 0 && {
@@ -47,18 +55,14 @@ export default function ProgressWidgetSummary({ loading, polCount, polPercent, g
               <Iconify
                 width={16}
                 height={16}
-                icon={polPercent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
+                icon={polPercent >= 0 ? 'eva:arrow-upward-fill' : 'eva:arrow-downward-fill'}
               />
             </IconWrapperStyle>
-            <Typography component="span" variant="subtitle2">
-              {polPercent > 0 && '+'}
-              {fPercent(polPercent)}
-            </Typography>
           </Stack>
         )}
-      </Card>
+      </Stack>
 
-      <Box sx={{ display: 'flex', pt: 2 }}>
+      <Stack direction="row" sx={{ pt: 2 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h5" color="#11142D">
             Audience Demographic Profile
@@ -73,31 +77,26 @@ export default function ProgressWidgetSummary({ loading, polCount, polPercent, g
               <Skeleton variant="text" width="100%" height={20} />
             ) : (
               genderData?.map((data, index) => (
-                <Grid key={index} spacing={2} sx={{ pt: 1 }} container>
-                  <Grid item sx={{ minWidth: 110 }}>
-                    <Typography variant="subtitle1" color="#7C7C7C">
-                      {data.title}
-                    </Typography>
-                  </Grid>
-                  <Grid xs item sx={{ mt: 1.2, color: '#fff' }}>
-                    <LinearProgress
-                      variant="determinate"
-                      value={data.value}
-                      color="secondary"
-                      style={{ colorPrimary: '#605BFF' }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle1" color="#000" sx={{ minWidth: 35 }}>
-                      {fNumber(data.value)}%
-                    </Typography>
-                  </Grid>
-                </Grid>
+                <Box key={index}>
+                  <Box spacing={2} sx={{ display: 'flex', justifyContent: 'space-between', pt: 1, pb: 0.5 }} container>
+                    <Box>
+                      <Typography variant="subtitle1" color="#7C7C7C">
+                        {data.title}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="subtitle1" color="#000">
+                        {fNumber(data.value)}%
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Divider />
+                </Box>
               ))
             )}
           </Box>
 
-          <Box sx={{ pt: 2 }}>
+          <Stack sx={{ pt: 2 }}>
             <Typography variant="h6" color="#11142D">
               Age Range
             </Typography>
@@ -106,64 +105,26 @@ export default function ProgressWidgetSummary({ loading, polCount, polPercent, g
               <Skeleton variant="text" width="100%" height={20} />
             ) : (
               ageRangeData?.map((data, index) => (
-                <Grid key={index} spacing={2} sx={{ pt: 1 }} container>
-                  <Grid item sx={{ minWidth: 110 }}>
-                    <Typography variant="subtitle1" color="#7C7C7C">
-                      {data.title}
-                    </Typography>
-                  </Grid>
-                  <Grid xs item sx={{ mt: 1.2 }}>
-                    <LinearProgress
-                      variant="determinate"
-                      value={data.value}
-                      color="secondary"
-                      style={{ color: '#605BFF' }}
-                    />
-                  </Grid>
-                  <Grid item sx={{ minWidth: 50 }}>
-                    <Typography variant="subtitle1" color="#000">
-                      {fNumber(data.value)}%
-                    </Typography>
-                  </Grid>
-                </Grid>
+                <Box key={index}>
+                  <Box spacing={2} sx={{ display: 'flex', justifyContent: 'space-between', pt: 1, pb: 0.5 }} container>
+                    <Box>
+                      <Typography variant="subtitle1" color="#7C7C7C">
+                        {data.title}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="subtitle1" color="#000">
+                        {fNumber(data.value)}%
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Divider />
+                </Box>
               ))
             )}
-          </Box>
-
-          <Box sx={{ pt: 2 }}>
-            <Typography variant="h6" color="#11142D">
-              Parental Status
-            </Typography>
-
-            {loading ? (
-              <Skeleton variant="text" width="100%" height={20} />
-            ) : (
-              parentData?.map((data, index) => (
-                <Grid key={index} spacing={2} sx={{ pt: 1 }} container>
-                  <Grid item sx={{ minWidth: 110 }}>
-                    <Typography variant="subtitle1" color="#7C7C7C">
-                      {data.title}
-                    </Typography>
-                  </Grid>
-                  <Grid xs item sx={{ mt: 1.2 }}>
-                    <LinearProgress
-                      variant="determinate"
-                      value={data.value}
-                      color="secondary"
-                      style={{ color: '#605BFF' }}
-                    />
-                  </Grid>
-                  <Grid item sx={{ minWidth: 50 }}>
-                    <Typography variant="subtitle1" color="#000">
-                      {fNumber(data.value)} %
-                    </Typography>
-                  </Grid>
-                </Grid>
-              ))
-            )}
-          </Box>
+          </Stack>
         </Box>
-      </Box>
+      </Stack>
     </Card>
   );
 }

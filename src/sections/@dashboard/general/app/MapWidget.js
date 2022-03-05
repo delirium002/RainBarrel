@@ -3,12 +3,16 @@ import { useState, useEffect } from 'react';
 import { Card, Box, Grid, Typography } from '@mui/material';
 // import ReactMapGL from 'react-map-gl';
 
-import KeplerGl from 'kepler.gl';
 import Slider from '@mui/material/Slider';
 
 import { useDispatch, useSelector } from 'react-redux';
-import useSwr from 'swr';
-import { addDataToMap } from 'kepler.gl/actions';
+// import DeckGL from '@deck.gl/react';
+import { LineLayer } from '@deck.gl/layers';
+import { HexagonLayer, HeatmapLayer } from '@deck.gl/aggregation-layers';
+// import { StaticMap } from 'react-map-gl';
+import { MapView, FirstPersonView } from '@deck.gl/core';
+import DeckGL, { GeoJsonLayer, ArcLayer } from 'deck.gl';
+import { StaticMap, MapContext, NavigationControl } from 'react-map-gl';
 
 export default function MapWidget() {
   const [valueFrequency, setValueFrequency] = useState(37);
@@ -21,61 +25,68 @@ export default function MapWidget() {
     setValueRecency(newValue);
   };
 
-  // const [viewport, setViewport] = useState({
-  //   latitude: 37.785164,
-  //   longitude: -100,
-  //   width: '100%',
-  //   height: '100%',
-  //   zoom: 3,
-  // });
+  const AIR_PORTS = 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson';
 
-  const dispatch = useDispatch();
-  const { data } = useSwr('covid', async () => {
-    const response = await fetch(
-      'https://gist.githubusercontent.com/leighhalliday/a994915d8050e90d413515e97babd3b3/raw/a3eaaadcc784168e3845a98931780bd60afb362f/covid19.json'
-    );
-    const data = await response.json();
-    return data;
-  });
+  // const data = [{ COORDINATES: [-122.42177834, 37.78346622, -122.43177834, 37.78546622], WEIGHT: 10 }];
 
-  useEffect(() => {
-    if (data) {
-      dispatch(
-        addDataToMap({
-          datasets: {
-            info: {
-              label: 'COVID-19',
-              id: 'covid19',
-            },
-            data,
-          },
-          option: {
-            centerMap: true,
-            readOnly: false,
-          },
-          config: {},
-        })
-      );
-    }
-  }, [dispatch, data]);
+  const INITIAL_VIEW_STATE = {
+    latitude: 51.47,
+    longitude: 0.45,
+    zoom: 4,
+    bearing: 0,
+    pitch: 30,
+  };
+
+  // const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json';
+  const MAP_STYLE = 'mapbox://styles/mapbox/dark-v9';
+
+  const NAV_CONTROL_STYLE = {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  };
+
+  const layers = [
+    new GeoJsonLayer({
+      id: 'airports',
+      data: AIR_PORTS,
+      // Styles
+      filled: true,
+      pointRadiusMinPixels: 2,
+      pointRadiusScale: 2000,
+      getPointRadius: (f) => 11 - f.properties.scalerank,
+      getFillColor: [200, 0, 80, 180],
+      // Interactive props
+      pickable: true,
+      autoHighlight: true,
+    }),
+    // new HexagonLayer({
+    //   id: 'hex',
+    //   data,
+    //   pickable: true,
+    //   extruded: true,
+    //   radius: 200,
+    //   elevationScale: 4,
+    //   getPosition: (d) => [d.COORDINATES[0], d.COORDINATES[1]],
+    //   getElevationWeight: (d) => d.WEIGHT,
+    //   // getPosition: (d) => d.COORDINATES,
+    // }),
+  ];
 
   return (
     <Card sx={{ height: '100%', width: '100%', p: 2, pb: 0 }}>
-      <Box>
-        <Card>
-          {/* <ReactMapGL
-            {...viewport}
-            mapStyle="mapbox://styles/mapbox/streets-v9"
-            mapboxApiAccessToken="pk.eyJ1IjoiYWhzYW5uYXNlZW05NyIsImEiOiJja3p4MG5saG0yMDJmMnVwa2Npa3Z3dDV0In0.eljSkJFpbxDvud308RNKkA"
-            onViewportChange={(viewport) => setViewport(viewport)}
-          /> */}
-
-          <KeplerGl
-            id="covid"
-            width={window.innerWidth}
-            mapboxApiAccessToken="pk.eyJ1IjoiYWhzYW5uYXNlZW05NyIsImEiOiJja3p4MG5saG0yMDJmMnVwa2Npa3Z3dDV0In0.eljSkJFpbxDvud308RNKkA"
-            height={window.innerHeight}
-          />
+      <Box sx={{ height: '90%' }}>
+        <Card sx={{ height: '100%', width: '100%' }}>
+          <DeckGL
+            initialViewState={INITIAL_VIEW_STATE}
+            controller
+            layers={layers}
+            ContextProvider={MapContext.Provider}
+            getTooltip={({ object }) => object && `${object.hex} count: ${object.count}`}
+          >
+            <StaticMap mapStyle={MAP_STYLE} mapboxApiAccessToken={process.env.REACT_APP_MAPBOX} />
+            <NavigationControl style={NAV_CONTROL_STYLE} />
+          </DeckGL>
         </Card>
       </Box>
 

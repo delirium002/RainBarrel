@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 // @mui
 import { styled } from '@mui/material/styles';
 import {
@@ -100,11 +102,15 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', color: 'black' }}>
             <Box sx={{ mr: 4, ml: 4 }}>
-              <Typography variant="h6">Dashboard</Typography>
+              <Link to="/" style={{ color: '#000', textDecoration: 'none' }}>
+                <Typography variant="h6">Dashboard</Typography>
+              </Link>
             </Box>
 
             <Box sx={{ mr: 4, ml: 4 }}>
-              <Typography variant="h6">Public</Typography>
+              <Link to="/audience" style={{ color: '#000', textDecoration: 'none' }}>
+                <Typography variant="h6">Public</Typography>
+              </Link>{' '}
             </Box>
 
             <Box sx={{ mr: 4, ml: 4 }}>

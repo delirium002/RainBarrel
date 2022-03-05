@@ -2,8 +2,6 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import keplerGlReducer from 'kepler.gl/reducers';
-
 // slices
 import mailReducer from './slices/mail';
 import chatReducer from './slices/chat';
@@ -38,8 +36,6 @@ const rootReducer = combineReducers({
 
   dashboardReducer: getDashboardDataReducer,
   getDemoAuthDataReducer,
-  // <-- mount kepler.gl reducer in your app
-  keplerGl: keplerGlReducer,
 });
 
 export { rootPersistConfig, rootReducer };
