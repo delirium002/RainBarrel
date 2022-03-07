@@ -4,8 +4,8 @@ import ReactApexChart from 'react-apexcharts';
 // @mui
 import { Card, CardHeader, Box } from '@mui/material';
 // components
-import { BaseOptionChart } from '../../../../components/chart';
-import BaseOptionChartArea from '../../../../components/chart/BaseOptionChartArea';
+import { BaseOptionChart } from '../../../components/chart';
+import BaseOptionChartArea from '../../../components/chart/BaseOptionChartArea';
 // ----------------------------------------------------------------------
 
 AppGraph.propTypes = {

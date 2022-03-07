@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,22 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack, Skeleton } from '@mui/material';
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
-import useAuth from '../../../../hooks/useAuth';
 // utils
 import { fNumber, fPercent } from '../../../../utils/formatNumber';
 // components
 import Iconify from '../../../../components/Iconify';
-
-import AppModal from './AppModal';
-import AppPopOver from './AppPopOver';
-
-import illustration from '../../../../assets/modalImage.png';
-import { getDemoAuthData } from '../../../../redux/slices/dashboard/action';
 
 // ----------------------------------------------------------------------
 
@@ -36,112 +25,63 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.success.main, 0.16),
 }));
 
-const ShareIconWrapperStyle = styled('div')(() => ({
-  width: 32,
-  height: 32,
-  display: 'flex',
-  borderRadius: '50%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#d9d9d9',
-  border: '1px solid #d9d9d9',
-  backgroundColor: '#fff',
-}));
-
 // ----------------------------------------------------------------------
 
 export default function AppWidgetSummary({ loading, audience, audienceCode, audienceSize, audiencePercent }) {
-  const { user } = useAuth();
-
-  const { authData } = useSelector((state) => state.getDemoAuthDataReducer);
-
   const theme = useTheme();
+  const chartOptions = {
+    colors: ['#30E0A1'],
+    chart: { sparkline: { enabled: true } },
+    // plotOptions: { area: {  } },
+
+    stroke: {
+      curve: 'smooth',
+      width: 0.5,
+    },
+
+    tooltip: {
+      x: { show: false },
+      y: {
+        formatter: (seriesName) => fNumber(seriesName),
+        title: {
+          formatter: () => '',
+        },
+      },
+      marker: { show: false },
+    },
+  };
+
   const dispatch = useDispatch();
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [openPopOver, setOpenPopOver] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const percent = 10;
 
-  const handleFavourite = () => {
-    if (!user) {
-      setModalOpen(true);
-    } else {
-      dispatch(getDemoAuthData(user?.id));
-    }
-  };
-
-  const handleShare = (event) => {
-    if (!user) {
-      setModalOpen(true);
-    } else {
-      const tempInput = document.createElement('input');
-      tempInput.value = `${window.location.href}`;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      setAnchorEl(event.currentTarget);
-      setOpenPopOver(true);
-    }
-  };
+  const chartData = [5, 18, 12, 51, 68, 11, 39, 37, 27, 20];
 
   return (
-    <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 4 }}>
-      <AppModal
-        type="auth"
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        title="You need an Account to use this feature"
-        image={illustration}
-      />
-      <AppPopOver
-        text="Link Copied!"
-        openPopOver={openPopOver}
-        setOpenPopOver={setOpenPopOver}
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-      />
-
-      <Stack direction="row" sx={{ width: '60vw', justifyContent: 'space-between' }}>
-        <Stack>
-          <Typography variant="subtitle2" color="#93A3AB">
-            Public Audience
-          </Typography>
-
-          {loading ? (
-            <Skeleton variant="text" width="100%" height={15} />
-          ) : (
-            <Box>
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h5">{audience}</Typography>
-              </Box>
-              <Box>
-                <Typography variant="subtitle2" color="#929292">
-                  ID: #{audienceCode}
-                </Typography>
-              </Box>
-            </Box>
-          )}
-        </Stack>
-
-        <Stack direction="row">
-          <Box>
-            <Typography variant="subtitle2" color="#93A3AB">
-              Audience Size
+    <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 3 }}>
+      <Stack>
+        {loading ? (
+          <Skeleton variant="text" width="100%" height={15} />
+        ) : (
+          <Stack direction="row">
+            <Typography variant="subtitle2" color="#000">
+              Single Father in LA
             </Typography>
 
-            {loading ? (
-              <Skeleton variant="text" width="100%" height={15} />
-            ) : (
-              <Typography variant="h5">{fNumber(audienceSize)}</Typography>
-            )}
-          </Box>
+            <Box sx={{ ml: 1 }}>
+              <Typography variant="subtitle2" color="#929292">
+                #456785
+              </Typography>
+            </Box>
+          </Stack>
+        )}
 
-          {audiencePercent && (
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ ml: 2 }}>
+        <Stack sx={{ mt: 1 }}>
+          {percent && (
+            <Stack direction="row" alignItems="center" spacing={1}>
               <IconWrapperStyle
                 sx={{
-                  ...(audiencePercent < 0 && {
+                  ...(percent < 0 && {
                     color: 'error.main',
                     bgcolor: alpha(theme.palette.error.main, 0.16),
                   }),
@@ -150,68 +90,33 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
                 <Iconify
                   width={16}
                   height={16}
-                  icon={audiencePercent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
+                  icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
                 />
               </IconWrapperStyle>
               <Typography component="span" variant="subtitle2">
-                {audiencePercent > 0 && '+'}
-                {fPercent(audiencePercent)}
+                {percent > 0 && '+'}
+                {fPercent(percent)}
               </Typography>
             </Stack>
           )}
         </Stack>
 
-        <Stack>
-          <Typography variant="subtitle2" color="#93A3AB">
-            Country
-          </Typography>
-
-          {loading ? (
-            <Skeleton variant="text" width="100%" height={15} />
-          ) : (
-            <Box sx={{ flexGrow: 1 }}>
-              <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                <Select defaultValue="worldwide">
-                  <MenuItem value="worldwide">Worldwide</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          )}
-        </Stack>
-
-        <Stack>
-          <Typography variant="subtitle2" color="#93A3AB">
-            Audience Type
-          </Typography>
-
-          {loading ? (
-            <Skeleton variant="text" width="100%" height={15} />
-          ) : (
-            <FormControl variant="standard" sx={{ minWidth: 120 }}>
-              <Select defaultValue="all visitors">
-                <MenuItem value="all visitors">All Visitors</MenuItem>
-              </Select>
-            </FormControl>
-          )}
+        <Stack sx={{ mt: 1 }}>
+          <Box>
+            {loading ? (
+              <Skeleton variant="text" width="100%" height={15} />
+            ) : (
+              <Typography variant="h5">{fNumber(18756)}</Typography>
+            )}
+          </Box>
         </Stack>
       </Stack>
 
-      <Stack flexDirection="row" sx={{ justifyContent: 'end', pt: 3, pb: 3.5 }}>
-        <Box sx={{ ml: 2 }}>
-          <ShareIconWrapperStyle onClick={handleFavourite}>
-            <Iconify width={20} height={20} icon="eva:star-fill" />
-          </ShareIconWrapperStyle>
-        </Box>
-        <Box sx={{ ml: 2 }}>
-          <ShareIconWrapperStyle>
-            <Iconify width={20} height={20} icon="eva:download-fill" />
-          </ShareIconWrapperStyle>
-        </Box>
-        <Box sx={{ ml: 2 }}>
-          <ShareIconWrapperStyle onClick={handleShare}>
-            <Iconify width={20} height={20} icon="eva:share-fill" />
-          </ShareIconWrapperStyle>
-        </Box>
+      <Stack>
+        <Typography variant="body2" component="p" color="#000">
+          30 day trend
+        </Typography>
+        <ReactApexChart type="area" series={[{ data: chartData }]} options={chartOptions} width={80} height={36} />
       </Stack>
     </Card>
   );

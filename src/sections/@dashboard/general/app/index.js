@@ -9,9 +9,4 @@ export { default as AppWidgetSummary } from './AppWidgetSummary';
 export { default as AppCurrentDownload } from './AppCurrentDownload';
 export { default as AppTopInstalledCountries } from './AppTopInstalledCountries';
 
-export { default as DownloadWidget } from './DownloadWidget';
-export { default as MapWidget } from './MapWidget';
-export { default as ProgressWidgetSummary } from './ProgressWidgetSummary';
-export { default as AppMatchRate } from './AppMatchRate';
-export { default as AppGraph } from './AppGraph';
-export { default as AppSimilarMatch } from './AppSimilarMatch';
+export { default as AppTables } from './AppTables';

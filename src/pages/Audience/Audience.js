@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -22,7 +22,7 @@ import {
   AppMatchRate,
   AppGraph,
   AppSimilarMatch,
-} from '../../sections/@dashboard/general/app';
+} from '../../sections/Audience/app';
 
 import { getDashboardData } from '../../redux/slices/dashboard/action';
 
@@ -49,6 +49,7 @@ export default function Audience() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
             <AppWidgetSummary
+              user={user}
               loading={loading}
               audience={topAnalytics?.audience}
               audienceCode={topAnalytics?.audienceCode}
@@ -86,6 +87,7 @@ export default function Audience() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppMatchRate
+              user={user}
               title="DSP Match Rate"
               color="#FF7A45"
               heading={dspMatchRate?.heading}

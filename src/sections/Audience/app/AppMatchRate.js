@@ -4,17 +4,13 @@ import LinearProgress from '@mui/material/LinearProgress';
 // @mui
 import { Box, Button, Card, CardHeader, Typography, Stack, Grid } from '@mui/material';
 
-import useAuth from '../../../../hooks/useAuth';
 // components
-import Iconify from '../../../../components/Iconify';
-import AppModal from './AppModal';
+import Iconify from '../../../components/Iconify';
+import AppModal from '../../../components/AppModal';
 
-import illustration from '../../../../assets/modalImage.png';
 // ----------------------------------------------------------------------
 
-export default function AppMatchRate({ title, color, heading, description, data }) {
-  const { user } = useAuth();
-
+export default function AppMatchRate({ user, title, color, heading, description, data }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
 
@@ -40,7 +36,6 @@ export default function AppMatchRate({ title, color, heading, description, data 
             ? 'Please share your query with us using the form below, also upload the document if you have any.'
             : undefined
         }
-        image={illustration}
       />
 
       <CardHeader title={title} />

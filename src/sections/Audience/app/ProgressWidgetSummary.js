@@ -2,9 +2,9 @@
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack, Grid, Skeleton, Divider } from '@mui/material';
 // utils
-import { fNumber, fPercent } from '../../../../utils/formatNumber';
+import { fNumber, fPercent } from '../../../utils/formatNumber';
 // components
-import Iconify from '../../../../components/Iconify';
+import Iconify from '../../../components/Iconify';
 
 export default function ProgressWidgetSummary({ loading, polCount, polPercent, genderData, ageRangeData, parentData }) {
   const theme = useTheme();

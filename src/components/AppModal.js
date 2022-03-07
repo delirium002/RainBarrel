@@ -6,8 +6,9 @@ import { Box, Typography, Modal, Button, TextField } from '@mui/material';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import Iconify from '../../../../components/Iconify';
-import Image from '../../../../components/Image';
+import Iconify from './Iconify';
+import Image from './Image';
+import illustration from '../assets/modalImage.png';
 
 const AppModal = ({ type, modalOpen, setModalOpen, title, description, image }) => {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const AppModal = ({ type, modalOpen, setModalOpen, title, description, image }) 
 
         <Box sx={{ mt: 2 }}>
           {type === 'auth' ? (
-            <Image src={image} alt="illustration" />
+            <Image src={illustration} alt="illustration" />
           ) : (
             <>
               <TextField
