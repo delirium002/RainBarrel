@@ -1,7 +1,4 @@
-import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-
-import { useDispatch, useSelector } from 'react-redux';
 
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
@@ -27,13 +24,11 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AppWidgetSummary({ loading, audience, audienceCode, audienceSize, audiencePercent }) {
+export default function AppWidgetSummary({ loading, title, code, percent, size, chartData, numberOfDays }) {
   const theme = useTheme();
   const chartOptions = {
     colors: ['#30E0A1'],
     chart: { sparkline: { enabled: true } },
-    // plotOptions: { area: {  } },
-
     stroke: {
       curve: 'smooth',
       width: 0.5,
@@ -51,12 +46,6 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
     },
   };
 
-  const dispatch = useDispatch();
-
-  const percent = 10;
-
-  const chartData = [5, 18, 12, 51, 68, 11, 39, 37, 27, 20];
-
   return (
     <Card sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pl: 4, pr: 3 }}>
       <Stack>
@@ -65,12 +54,12 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
         ) : (
           <Stack direction="row">
             <Typography variant="subtitle2" color="#000">
-              Single Father in LA
+              {title}
             </Typography>
 
             <Box sx={{ ml: 1 }}>
               <Typography variant="subtitle2" color="#929292">
-                #456785
+                # {code}
               </Typography>
             </Box>
           </Stack>
@@ -106,7 +95,7 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
             {loading ? (
               <Skeleton variant="text" width="100%" height={15} />
             ) : (
-              <Typography variant="h5">{fNumber(18756)}</Typography>
+              <Typography variant="h5">{fNumber(size)}</Typography>
             )}
           </Box>
         </Stack>
@@ -114,7 +103,7 @@ export default function AppWidgetSummary({ loading, audience, audienceCode, audi
 
       <Stack>
         <Typography variant="body2" component="p" color="#000">
-          30 day trend
+          {numberOfDays} day trend
         </Typography>
         <ReactApexChart type="area" series={[{ data: chartData }]} options={chartOptions} width={80} height={36} />
       </Stack>

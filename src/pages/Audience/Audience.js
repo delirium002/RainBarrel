@@ -24,7 +24,7 @@ import {
   AppSimilarMatch,
 } from '../../sections/Audience/app';
 
-import { getDashboardData } from '../../redux/slices/dashboard/action';
+import { getAudienceData } from '../../redux/slices/Audience/action';
 
 // ----------------------------------------------------------------------
 
@@ -35,13 +35,13 @@ export default function Audience() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
 
-  const { loading, dashboard, error } = useSelector((state) => state.dashboardReducer);
+  const { loading, audience, error } = useSelector((state) => state.audienceReducer);
 
   useEffect(() => {
-    dispatch(getDashboardData());
+    dispatch(getAudienceData());
   }, []);
 
-  const { topAnalytics, dspMatchRate, chartData, rangeData, similarMatchData, socialMatchData } = dashboard;
+  const { topAnalytics, dspMatchRate, chartData, rangeData, similarMatchData, socialMatchData } = audience;
 
   return (
     <Page title="Audience">

@@ -28,7 +28,7 @@ import MoreMenu from './MoreMenu';
 
 // ----------------------------------------------------------------------
 
-export default function AppTables({ user, title, tableHead, productList, setProductList }) {
+export default function AppTables({ user, title, tableHead, data }) {
   const theme = useTheme();
 
   const [page, setPage] = useState(0);
@@ -47,12 +47,11 @@ export default function AppTables({ user, title, tableHead, productList, setProd
   };
 
   const handleDeleteProduct = (productId) => {
-    const deleteProduct = productList.filter((product) => product.id !== productId);
+    const deleteProduct = data.filter((product) => product.id !== productId);
     setSelected([]);
-    setProductList(deleteProduct);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - productList.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data?.length) : 0;
 
   return (
     <Card>
@@ -63,17 +62,19 @@ export default function AppTables({ user, title, tableHead, productList, setProd
         title={'You need an Account to use this feature'}
       />
       <CardHeader
-        title={title}
+        title={user ? title : <>Demo {title}</>}
         action={
-          <Button
-            variant="outlined"
-            color="secondary"
-            size="small"
-            onClick={handleModal}
-            sx={{ color: '#605BFF', border: '0.5px solid #605BFF' }}
-          >
-            + Create
-          </Button>
+          title === 'Custom Audience' && (
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              onClick={handleModal}
+              sx={{ color: '#605BFF', border: '0.5px solid #605BFF' }}
+            >
+              + Create
+            </Button>
+          )
         }
       />
       <Scrollbar>
@@ -91,11 +92,18 @@ export default function AppTables({ user, title, tableHead, productList, setProd
               </TableHead>
 
               <TableBody>
-                {productList.slice(0, numData).map((row) => {
+                {data?.slice(0, numData)?.map((row, index) => {
                   const { id, audienceName, size, change } = row;
 
                   return (
-                    <TableRow hover key={id} tabIndex={-1}>
+                    <TableRow hover key={index} tabIndex={-1}>
+                      {title === 'Custom Audience' && (
+                        <TableCell>
+                          <Typography variant="subtitle2" noWrap>
+                            {id}
+                          </Typography>
+                        </TableCell>
+                      )}
                       <TableCell>
                         <Typography variant="subtitle2" noWrap>
                           {audienceName}
@@ -131,7 +139,7 @@ export default function AppTables({ user, title, tableHead, productList, setProd
               color="secondary"
               size="small"
               sx={{ mt: 2, color: '#000', border: '0.5px solid #000' }}
-              onClick={() => setNumData(numData === 5 ? productList?.length : 5)}
+              onClick={() => setNumData(numData === 5 ? data?.length : 5)}
             >
               {numData === 5 ? <>View All</> : <>Minimize</>}
             </Button>

@@ -18,7 +18,7 @@ import Iconify from '../../../components/Iconify';
 import AppModal from '../../../components/AppModal';
 import AppPopOver from './AppPopOver';
 
-import { getDemoAuthData } from '../../../redux/slices/dashboard/action';
+import { getDemoAuthData } from '../../../redux/slices/Audience/action';
 
 // ----------------------------------------------------------------------
 

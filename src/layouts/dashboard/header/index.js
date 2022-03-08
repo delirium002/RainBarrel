@@ -1,20 +1,13 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // @mui
 import { styled } from '@mui/material/styles';
-import {
-  Box,
-  Stack,
-  AppBar,
-  Toolbar,
-  Input,
-  Typography,
-  Slide,
-  Button,
-  InputAdornment,
-  ClickAwayListener,
-} from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Input, Typography, Button, InputAdornment } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
@@ -29,9 +22,6 @@ import { IconButtonAnimate } from '../../../components/animate';
 //
 // import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
-// import LanguagePopover from './LanguagePopover';
-// import ContactsPopover from './ContactsPopover';
-// import NotificationsPopover from './NotificationsPopover';
 
 // ----------------------------------------------------------------------
 
@@ -74,6 +64,14 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
   const isOffset = useOffSetTop(HEADER.DASHBOARD_DESKTOP_HEIGHT) && !verticalLayout;
 
   const isDesktop = useResponsive('up', 'lg');
+
+  const inputOptions = [
+    { title: 'Teenagers' },
+    { title: 'Mens above 30' },
+    { title: 'Mens with pets' },
+    { title: 'Women above 30' },
+    { title: 'Women with pets' },
+  ];
 
   return (
     <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
@@ -120,22 +118,29 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
 
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ mr: 2, width: '40vw' }}>
-              <Input
-                autoFocus
-                fullWidth
-                disableUnderline
-                placeholder="Search for audience…"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Iconify icon={'eva:search-fill'} sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-                  </InputAdornment>
-                }
-                sx={{
-                  fontWeight: 'fontWeightLight',
-                  backgroundColor: '#F5F5F5',
-                  borderRadius: '4px',
-                  padding: '5px',
-                }}
+              <Autocomplete
+                freeSolo
+                size="small"
+                autoSelect
+                options={inputOptions.map((option) => option.title)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    color="secondary"
+                    placeholder="Search for audience..."
+                    sx={{
+                      fontWeight: 'fontWeightLight',
+                      backgroundColor: '#F5F5F5',
+                    }}
+                    // InputProps={{
+                    //   startAdornment: (
+                    //     <InputAdornment position="start">
+                    //       <Iconify icon={'eva:search-fill'} sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+                    //     </InputAdornment>
+                    //   ),
+                    // }}
+                  />
+                )}
               />
             </Box>
             <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
