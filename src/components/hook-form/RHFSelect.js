@@ -11,7 +11,7 @@ RHFSelect.propTypes = {
   name: PropTypes.string,
 };
 
-export default function RHFSelect({ name, children, ...other }) {
+export default function RHFSelect({ name, color, children, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -20,6 +20,7 @@ export default function RHFSelect({ name, children, ...other }) {
       control={control}
       render={({ field, fieldState: { error } }) => (
         <TextField
+          color={color}
           {...field}
           select
           fullWidth

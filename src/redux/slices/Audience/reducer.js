@@ -7,12 +7,12 @@ import {
   GET_DEMO_AUTH_DATA_FAIL,
 } from './constant';
 
-export const getAudienceDataReducer = (state = { Audeince: {} }, action) => {
+export const getAudienceDataReducer = (state = { audience: {} }, action) => {
   switch (action.type) {
     case GET_AUDIENCE_DATA_REQUEST:
       return { ...state, loading: true };
     case GET_AUDIENCE_DATA_SUCCESS:
-      return { loading: false, Audeince: action.payload };
+      return { loading: false, audience: action.payload };
     case GET_AUDIENCE_DATA_FAIL:
       return { loading: false, error: action.payload };
     default:

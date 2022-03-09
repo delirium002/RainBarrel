@@ -10,7 +10,7 @@ RHFTextField.propTypes = {
   name: PropTypes.string,
 };
 
-export default function RHFTextField({ name, ...other }) {
+export default function RHFTextField({ name, color, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -18,7 +18,7 @@ export default function RHFTextField({ name, ...other }) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <TextField {...field} fullWidth error={!!error} helperText={error?.message} {...other} />
+        <TextField {...field} color={color} fullWidth error={!!error} helperText={error?.message} {...other} />
       )}
     />
   );

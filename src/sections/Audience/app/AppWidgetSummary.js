@@ -16,7 +16,7 @@ import { fNumber, fPercent } from '../../../utils/formatNumber';
 import Iconify from '../../../components/Iconify';
 
 import AppModal from '../../../components/AppModal';
-import AppPopOver from './AppPopOver';
+import AppPopOver from '../../../components/AppPopOver';
 
 import { getDemoAuthData } from '../../../redux/slices/Audience/action';
 

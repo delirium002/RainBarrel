@@ -157,6 +157,16 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [{ element: <Audience />, index: true }],
     },
+    {
+      path: 'dashboard/user/accountsettings',
+      element: <DashboardLayout />,
+      children: [{ element: <AccountSetting />, index: true }],
+    },
+    {
+      path: 'dashboard/search',
+      element: <DashboardLayout />,
+      children: [{ element: <Search />, index: true }],
+    },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
@@ -194,6 +204,10 @@ const Calendar = Loadable(lazy(() => import('../pages/dashboard/Calendar')));
 const Kanban = Loadable(lazy(() => import('../pages/dashboard/Kanban')));
 // Audience
 const Audience = Loadable(lazy(() => import('../pages/Audience/Audience')));
+// Account Settings
+const AccountSetting = Loadable(lazy(() => import('../pages/AccountSetting/AccountSetting')));
+// Account Settings
+const Search = Loadable(lazy(() => import('../pages/Search/Search')));
 
 // Main
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
