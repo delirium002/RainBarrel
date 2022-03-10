@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, TextField, Input, InputAdornment } from '@mui/material';
+import { Container, Grid, TextField, Button, InputAdornment } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,26 +12,37 @@ import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
 // sections
-import { AppWidgetSummary } from '../../sections/@dashboard/general/app';
 import Iconify from '../../components/Iconify';
-import { getDashboardData } from '../../redux/slices/Dashboard/action';
+import { getSearchData } from '../../redux/slices/Search/action';
 import AppTables from '../../sections/Search/AppTables';
+import FilterPopOver from './FilterPopOver';
 // ----------------------------------------------------------------------
 
 export default function Search() {
   const { user } = useAuth();
   const theme = useTheme();
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [search, setSearch] = useState('');
+
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
 
-  const { loading, dashboard, error } = useSelector((state) => state.dashboardReducer);
+  const { loading, searchData } = useSelector((state) => state.searchDataReducer);
 
   useEffect(() => {
-    dispatch(getDashboardData());
+    dispatch(getSearchData());
   }, []);
 
-  const { topTrendings, customAudience, favouriteAudience, demoCustomAudience, demoFavouriteAudience } = dashboard;
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { data } = searchData;
 
   const TABLE_HEAD_CUSTOM = [
     { id: 'audienceID', label: 'Audience ID', alignRight: false },
@@ -43,93 +54,27 @@ export default function Search() {
     { id: '' },
   ];
 
-  const data = [
-    {
-      id: 'INV-9804378',
-      audienceName: 'Teenage kids',
-      audienceType: 'All',
-      size: 10708,
-      change: 10,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Pizza stores',
-      audienceType: 'Frequent',
-      size: 61391,
-      change: 5,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Moms with cat',
-      audienceType: 'Multiple Locations',
-      size: 233,
-      change: 80,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Single fathers',
-      audienceType: 'Multiple Locations',
-      size: 43359,
-      change: -30,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Men below 30',
-      audienceType: 'Multiple Locations',
-      size: 13671,
-      change: 40,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Men below 20',
-      audienceType: 'Frequent',
-      size: 9876,
-      change: -50,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Shopkeepers',
-      audienceType: 'Frequent',
-      size: 11001,
-      change: 60,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Students',
-      audienceType: 'All',
-      size: 5436,
-      change: 70,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-    {
-      id: 'INV-9804378',
-      audienceName: 'Teacher',
-      audienceType: 'All',
-      size: 7843,
-      change: -5,
-      chartData: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
-    },
-  ];
+  const filtData = [];
+  data?.forEach((e) => {
+    if (e.audienceName.includes(search)) {
+      return filtData.push(e);
+    }
+  });
 
   return (
     <Page title="Audience">
+      <FilterPopOver anchorEl={anchorEl} handleClose={handleClose} />
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          <Grid item xs={11}>
             <TextField
               autoFocus
               fullWidth
-              disableUnderline
               placeholder="Search…"
               size="small"
               color="secondary"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -139,8 +84,24 @@ export default function Search() {
               }}
             />
           </Grid>
+          <Grid item xs={1}>
+            <Button
+              onClick={handleClick}
+              color="secondary"
+              startIcon={<Iconify icon={'eva:funnel-outline'} sx={{ color: '#11142D', width: 20, height: 20 }} />}
+              sx={{ color: '#11142D' }}
+            >
+              Filter
+            </Button>
+          </Grid>
           <Grid item xs={12}>
-            <AppTables user={user} title="Custom Audience" tableHead={TABLE_HEAD_CUSTOM} data={data} />
+            <AppTables
+              user={user}
+              title="Custom Audience"
+              tableHead={TABLE_HEAD_CUSTOM}
+              loading={loading}
+              data={filtData}
+            />
           </Grid>
         </Grid>
       </Container>

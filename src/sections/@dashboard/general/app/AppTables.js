@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 
+import { useNavigate } from 'react-router-dom';
 // utils
 import {
   Button,
@@ -29,6 +30,7 @@ import MoreMenu from './MoreMenu';
 // ----------------------------------------------------------------------
 
 export default function AppTables({ user, title, tableHead, data }) {
+  const navigate = useNavigate();
   const theme = useTheme();
 
   const [page, setPage] = useState(0);
@@ -36,7 +38,6 @@ export default function AppTables({ user, title, tableHead, data }) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [numData, setNumData] = useState(5);
 
   const handleModal = () => {
     if (!user) {
@@ -92,7 +93,7 @@ export default function AppTables({ user, title, tableHead, data }) {
               </TableHead>
 
               <TableBody>
-                {data?.slice(0, numData)?.map((row, index) => {
+                {data?.slice(0, 5)?.map((row, index) => {
                   const { id, audienceName, size, change } = row;
 
                   return (
@@ -139,9 +140,9 @@ export default function AppTables({ user, title, tableHead, data }) {
               color="secondary"
               size="small"
               sx={{ mt: 2, color: '#000', border: '0.5px solid #000' }}
-              onClick={() => setNumData(numData === 5 ? data?.length : 5)}
+              onClick={() => navigate('/dashboard/search')}
             >
-              {numData === 5 ? <>View All</> : <>Minimize</>}
+              View All
             </Button>
           </Box>
         </Box>

@@ -5,7 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 import { useTheme } from '@mui/material/styles';
 
 // utils
-import { Button, Box, Card, Table, TableHead, TableRow, TableBody, TableCell, Typography } from '@mui/material';
+import { Box, Card, Table, TableHead, TableRow, TableBody, TableCell, Typography, Skeleton } from '@mui/material';
 import { fNumber } from '../../utils/formatNumber';
 
 // components
@@ -16,7 +16,7 @@ import MoreMenu from './MoreMenu';
 
 // ----------------------------------------------------------------------
 
-export default function AppTables({ user, title, tableHead, data }) {
+export default function AppTables({ loading, user, tableHead, data }) {
   const theme = useTheme();
 
   const [page, setPage] = useState(0);
@@ -115,6 +115,34 @@ export default function AppTables({ user, title, tableHead, data }) {
               </TableRow>
             )}
           </TableBody>
+
+          {loading && (
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width="100%" height={20} />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
       </Box>
     </Card>

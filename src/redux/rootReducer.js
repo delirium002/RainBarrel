@@ -9,8 +9,9 @@ import productReducer from './slices/product';
 import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 
-import { getAudienceDataReducer, getDemoAuthDataReducer } from './slices/Audience/reducer';
 import { getDashboardDataReducer } from './slices/Dashboard/reducer';
+import { getAudienceDataReducer, getDemoAuthDataReducer } from './slices/Audience/reducer';
+import { getSearchDataReducer } from './slices/Search/reducer';
 
 // ----------------------------------------------------------------------
 
@@ -35,10 +36,10 @@ const rootReducer = combineReducers({
   kanban: kanbanReducer,
   product: persistReducer(productPersistConfig, productReducer),
 
+  dashboardReducer: getDashboardDataReducer,
   audienceReducer: getAudienceDataReducer,
   getDemoAuthDataReducer,
-
-  dashboardReducer: getDashboardDataReducer,
+  searchDataReducer: getSearchDataReducer,
 });
 
 export { rootPersistConfig, rootReducer };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 // @mui
 import { useTheme } from '@mui/material/styles';
