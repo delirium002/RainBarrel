@@ -158,6 +158,11 @@ export default function Router() {
       children: [{ element: <Audience />, index: true }],
     },
     {
+      path: '/customaudience',
+      element: <DashboardLayout />,
+      children: [{ element: <CustomAudience />, index: true }],
+    },
+    {
       path: 'dashboard/user/accountsettings',
       element: <DashboardLayout />,
       children: [{ element: <AccountSetting />, index: true }],
@@ -208,6 +213,8 @@ const Audience = Loadable(lazy(() => import('../pages/Audience/Audience')));
 const AccountSetting = Loadable(lazy(() => import('../pages/AccountSetting/AccountSetting')));
 // Account Settings
 const Search = Loadable(lazy(() => import('../pages/Search/Search')));
+// Account Settings
+const CustomAudience = Loadable(lazy(() => import('../pages/Custom Audience/CustomAudience')));
 
 // Main
 const HomePage = Loadable(lazy(() => import('../pages/Home')));

@@ -17,7 +17,6 @@ import cssStyles from '../../../utils/cssStyles';
 import { HEADER, NAVBAR } from '../../../config';
 // components
 import Logo from '../../../components/Logo';
-import Iconify from '../../../components/Iconify';
 import { IconButtonAnimate } from '../../../components/animate';
 //
 // import Searchbar from './Searchbar';
@@ -112,7 +111,9 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
             </Box>
 
             <Box sx={{ mr: 4, ml: 4 }}>
-              <Typography variant="h6">Custom</Typography>
+              <Link to="/customaudience" style={{ color: '#000', textDecoration: 'none' }}>
+                <Typography variant="h6">Custom</Typography>
+              </Link>
             </Box>
           </Box>
 
