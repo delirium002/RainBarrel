@@ -21,7 +21,7 @@ export default function ProgressWidgetSummary({ loading, polCount, polPercent, g
   }));
 
   return (
-    <Card sx={{ alignItems: 'center', p: 2 }}>
+    <Card sx={{ alignItems: 'center', p: 2, mb: 4 }}>
       <Stack direction="row" sx={{ pt: 1 }}>
         <Box sx={{ flexGrow: 1, color: '#11142D' }}>
           <Typography variant="h5" color="#11142D">

@@ -25,7 +25,7 @@ export default function AppMatchRate({ user, title, color, heading, description,
   };
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card sx={{ p: 2, mb: 4 }}>
       <AppModal
         type={modalType}
         modalOpen={modalOpen}

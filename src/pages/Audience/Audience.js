@@ -58,7 +58,36 @@ export default function Audience() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={8}>
+            <MapWidget />
+
+            <AppGraph type="bar" title="Audience Recency Distribution" chartData={chartData} />
+
+            <AppGraph type="area" title="Audience Size Over Time" chartData={chartData} />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <ProgressWidgetSummary
+              loading={loading}
+              polCount={rangeData?.polCount}
+              polPercent={rangeData?.polPercent}
+              genderData={rangeData?.genderData}
+              ageRangeData={rangeData?.ageRangeData}
+              parentData={rangeData?.parentData}
+            />
+            <AppMatchRate title="Social Match Rate" color="#605BFF" data={socialMatchData?.data} />
+
+            <AppMatchRate
+              user={user}
+              title="DSP Match Rate"
+              color="#FF7A45"
+              heading={dspMatchRate?.heading}
+              description={dspMatchRate?.description}
+              data={dspMatchRate?.data}
+            />
+          </Grid>
+
+          {/* <Grid item xs={12} md={6} lg={8}>
             <MapWidget />
           </Grid>
 
@@ -94,7 +123,7 @@ export default function Audience() {
               description={dspMatchRate?.description}
               data={dspMatchRate?.data}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={12} lg={12}>
             <AppSimilarMatch title="Similar Audiences" color="#FF7A45" data={similarMatchData?.data} />

@@ -74,7 +74,7 @@ export default function MapWidget() {
   ];
 
   return (
-    <Card sx={{ height: '100%', width: '100%', p: 2, pb: 0 }}>
+    <Card sx={{ height: 530, width: '100%', p: 2, pb: 0, mb: 4 }}>
       <Box sx={{ height: '90%' }}>
         <Card sx={{ height: '100%', width: '100%' }}>
           <DeckGL

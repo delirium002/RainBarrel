@@ -33,7 +33,7 @@ export default function AppGraph({ type, title, chartData }) {
   });
 
   return (
-    <Card>
+    <Card sx={{ mb: 4 }}>
       <CardHeader
         title={title}
         // subheader="(+43%) than last year"
